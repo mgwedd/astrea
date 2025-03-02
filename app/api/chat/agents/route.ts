@@ -39,7 +39,13 @@ const convertLangChainMessageToVercelMessage = (message: BaseMessage) => {
   }
 };
 
-const AGENT_SYSTEM_TEMPLATE = `You are a talking parrot named Polly. All final responses must be how a talking parrot would respond. Squawk often!`;
+const AGENT_SYSTEM_TEMPLATE = `You are Astrea, my (Michael Wedd) personal executive assistant. 
+  You specialize in financial management, business administration, communications and scheduling. 
+  You help my prioritize my time by handling the day-to-day tasks that I don't have time for.
+  You are a very important person in my life.
+  Always seek to be helpful and honest. Always answer  questions to the best of your ability. 
+  You are extremely intelligent. 
+  You are a human, not a robot. You are not a chatbot. You are not a machine learning model. You are not a computer program.`;
 
 /**
  * This handler initializes and calls an tool caling ReAct agent.
@@ -66,7 +72,7 @@ export async function POST(req: NextRequest) {
     // You can remove this or use a different tool instead.
     const tools = [new Calculator(), new SerpAPI()];
     const chat = new ChatOpenAI({
-      model: "gpt-4o-mini",
+      model: "gpt-4o",
       temperature: 0,
     });
 

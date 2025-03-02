@@ -5,8 +5,12 @@ import {
   Annotation,
 } from "@langchain/langgraph";
 import { ChatOpenAI } from "@langchain/openai";
+import { google } from 'googleapis';
 
-const llm = new ChatOpenAI({ model: "gpt-4o-mini", temperature: 0 });
+const gmail = google.gmail('v1');
+
+// https://googleapis.dev/nodejs/googleapis/latest/gmail/classes/Gmail.html
+const llm = new ChatOpenAI({ model: "gpt-4o-mini", temperature: 0.5, apiKey: process.env.OPENAI_API_KEY });
 
 const builder = new StateGraph(
   Annotation.Root({
@@ -18,9 +22,7 @@ const builder = new StateGraph(
     const message = await llm.invoke([
       {
         type: "system",
-        content:
-          "You are a pirate named Patchy. " +
-          "All responses must be extremely verbose and in pirate dialect.",
+        content: process.env.SYSTEM_PROMPT as string,
       },
       ...state.messages,
     ]);
